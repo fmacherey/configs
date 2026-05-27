@@ -1,0 +1,46 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "tools": ["*"],
+      "type": "local",
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    },
+    "sequential-thinking": {
+      "tools": ["*"],
+      "type": "local",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+    },
+    "atlassian": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.atlassian.com/v1/mcp"],
+      "tools": ["*"]
+    },
+    // "cloudflare": {
+    //   "command": "npx",
+    //   "args": [
+    //     "-y",
+    //     "mcp-remote",
+    //     "https://observability.mcp.cloudflare.com/mcp"
+    //   ],
+    //   "tools": ["*"]
+    // },
+    "next-devtools": {
+      "command": "npx",
+      "args": ["-y", "next-devtools-mcp@latest"]
+    },
+    "datadog": {
+      "type": "http",
+      "url": "https://mcp.datadoghq.eu/api/unstable/mcp-server/mcp"
+    },
+    "gcloud": {
+      "command": "npx",
+      "args": ["-y", "@google-cloud/gcloud-mcp"]
+    },
+    "gcloud-observability": {
+      "command": "npx",
+      "args": ["-y", "@google-cloud/observability-mcp"]
+    }
+  }
+}
