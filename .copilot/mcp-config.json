@@ -41,6 +41,17 @@
     "gcloud-observability": {
       "command": "npx",
       "args": ["-y", "@google-cloud/observability-mcp"]
+    },
+    "Chrome DevTools": {
+      "type": "stdio",
+      "command": "npx",
+      "tools": [
+        "*"
+      ],
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest"
+      ]
     }
   }
 }
