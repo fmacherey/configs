@@ -2,8 +2,8 @@
 
 ## Git & GitHub Workflow
 
-### Use Git Worktrees for Code Changes
-When working with GitHub (branches, PRs, commits), always use **git worktrees** to isolate
+### Always use Git Worktrees for Code Changes
+When working with Git (branches, PRs, commits), always use **git worktrees** to isolate
 changes. This keeps the main worktree clean and prevents sessions from interfering with each other.
 
 - Create a new worktree for each branch: `git worktree add <path> -b <branch>`
