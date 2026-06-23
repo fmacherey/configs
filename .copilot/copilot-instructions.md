@@ -20,3 +20,12 @@ Prompt before any of these actions:
 
 Example prompt:
 > "I'm ready to commit the changes. Would you like me to do it, or do you prefer to commit yourself?"
+
+### Always Open PRs as Draft
+When opening a pull request (after user confirmation), **always use `--draft`** flag:
+
+```
+gh pr create --draft ...
+```
+
+Never open a PR as ready-for-review directly — always create it as a draft first.
