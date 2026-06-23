@@ -2,11 +2,12 @@
 
 ## Git & GitHub Workflow
 
-### Use Git Subtrees for Parallel Sessions
-When working with GitHub (branches, PRs, commits), always use **git subtrees** to isolate
-changes across parallel sessions. This prevents sessions from interfering with each other.
+### Use Git Worktrees for Code Changes
+When working with GitHub (branches, PRs, commits), always use **git worktrees** to isolate
+changes. This keeps the main worktree clean and prevents sessions from interfering with each other.
 
-- Each logical unit of work should live in its own subtree-based branch scope.
+- Create a new worktree for each branch: `git worktree add <path> -b <branch>`
+- Each worktree has its own working directory — work is isolated without touching the main checkout.
 - Do not share working state or branches between concurrent sessions without explicit user confirmation.
 
 ### Always Ask Before Committing, Pushing, or Opening a PR
