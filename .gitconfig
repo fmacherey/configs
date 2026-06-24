@@ -1,0 +1,5 @@
+[user]
+	email = florian.macherey@avocadostore.de
+	name = Florian Macherey
+[pull]
+	rebase = true
