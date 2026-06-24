@@ -5,7 +5,7 @@ set -euo pipefail
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Whitelisted files and directories to install
-FILES=(.zshrc .vimrc)
+FILES=(.zshrc .vimrc .gitconfig)
 DIRS=(.copilot)
 
 # ──────────────────────────────────────────────

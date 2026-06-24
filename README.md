@@ -8,6 +8,7 @@ Personal configuration files (dotfiles) for a new machine setup.
 |------|-------------|
 | `.zshrc` | Zsh shell configuration |
 | `.vimrc` | Vim editor configuration |
+| `.gitconfig` | Git configuration |
 | `.copilot/` | GitHub Copilot configuration |
 
 ## Install
