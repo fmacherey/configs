@@ -98,3 +98,6 @@ When a shell snippet is too long for safe paste, write it as a script file and a
   - written as `: 'comment text'` (null-command builtin with single-quoted arg), which works identically in bash and zsh.
 - When embedding a shell snippet in a heredoc, script file, or `bash -c '...'`, `#` is fine. The rule only applies to interactive-paste blocks.
 - If unsure, default to no inline comments and use `echo` progress markers instead.
+
+## Deployments
+Favor helm chart change over Dockerfile change. E.g. when using ENV vars, prefer to add them in the helm chart values.yaml instead of the Dockerfile. This allows for easier configuration and avoids rebuilding the image for simple configuration changes.
