@@ -4,12 +4,14 @@ Personal configuration files (dotfiles) for a new machine setup.
 
 ## Contents
 
-| Path | Description |
-|------|-------------|
-| `.zshrc` | Zsh shell configuration |
-| `.vimrc` | Vim editor configuration |
-| `.gitconfig` | Git configuration |
-| `.copilot/` | GitHub Copilot configuration |
+| Path                    | Description                                                    |
+| ----------------------- | -------------------------------------------------------------- |
+| `.zshrc`                | Zsh shell configuration                                        |
+| `.vimrc`                | Vim editor configuration                                       |
+| `.gitconfig`            | Git configuration                                              |
+| `.copilot/`             | GitHub Copilot configuration                                   |
+| `vscode/settings.json`  | VS Code user settings (symlinked into Code User settings path) |
+| `vscode/extensions.txt` | VS Code extensions list used by installer                      |
 
 ## Install
 
@@ -32,6 +34,7 @@ This creates symlinks from `$HOME` to the files in this repository, e.g.:
 ~/.zshrc     →  ~/configs/.zshrc
 ~/.vimrc     →  ~/configs/.vimrc
 ~/.copilot   →  ~/configs/.copilot
+~/Library/Application Support/Code/User/settings.json  →  ~/configs/vscode/settings.json
 ```
 
 Because the files are symlinked, any future `git pull` immediately takes effect everywhere.
@@ -44,6 +47,8 @@ Because the files are symlinked, any future `git pull` immediately takes effect 
 Options:
   --help      Show this help message and exit
   --install   Create symlinks for all whitelisted files and directories
+  --install-vscode-extensions
+              Install VS Code extensions listed in vscode/extensions.txt
   --update    Pull the latest changes from the repository (git pull)
   --dryrun    Show what would be installed without creating any symlinks
 ```
@@ -55,6 +60,8 @@ Preview what would be linked without touching anything:
 ```sh
 ./install.sh --dryrun
 ```
+
+The output is shown as a table with a `TYPE` column (`file` or `dir`), plus `TARGET` and `SOURCE`.
 
 ### `--install`
 
@@ -75,6 +82,20 @@ Pull the latest changes. Since the home directory files are symlinks, this is al
 
 ```sh
 ./install.sh --update
+```
+
+### `--install-vscode-extensions`
+
+Install all VS Code extensions listed in `vscode/extensions.txt`:
+
+```sh
+./install.sh --install-vscode-extensions
+```
+
+The installer uses the VS Code CLI at:
+
+```sh
+/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code
 ```
 
 ## Adding new files

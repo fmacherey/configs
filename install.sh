@@ -11,6 +11,8 @@ DIRS=(.copilot)
 # Additional source -> destination mappings
 VSCODE_SETTINGS_SRC="$REPO_DIR/vscode/settings.json"
 VSCODE_SETTINGS_DST="$HOME/Library/Application Support/Code/User/settings.json"
+VSCODE_EXTENSIONS_FILE="$REPO_DIR/vscode/extensions.txt"
+VSCODE_CLI="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
 
 # ──────────────────────────────────────────────
 # Helpers
@@ -23,6 +25,8 @@ Usage: $(basename "$0") [OPTION]
 Options:
   --help      Show this help message and exit
   --install   Create symlinks for all whitelisted files and directories
+    --install-vscode-extensions
+                            Install VS Code extensions listed in vscode/extensions.txt
   --update    Pull the latest changes from the repository (git pull)
   --dryrun    Show what would be installed without creating any symlinks
 
@@ -129,6 +133,31 @@ cmd_update() {
     info "Done. All symlinked files are now up to date."
 }
 
+cmd_install_vscode_extensions() {
+    info "Installing VS Code extensions from $VSCODE_EXTENSIONS_FILE ..."
+
+    if [ ! -f "$VSCODE_EXTENSIONS_FILE" ]; then
+        error "Extensions file not found: $VSCODE_EXTENSIONS_FILE"
+        exit 1
+    fi
+
+    if [ ! -x "$VSCODE_CLI" ]; then
+        error "VS Code CLI not found or not executable: $VSCODE_CLI"
+        exit 1
+    fi
+
+    while IFS= read -r ext || [ -n "$ext" ]; do
+        if [ -z "$ext" ] || [[ "$ext" == \#* ]]; then
+            continue
+        fi
+
+        info "Installing extension: $ext"
+        "$VSCODE_CLI" --install-extension "$ext"
+    done < "$VSCODE_EXTENSIONS_FILE"
+
+    info "Done installing VS Code extensions."
+}
+
 # ──────────────────────────────────────────────
 # Entry point
 # ──────────────────────────────────────────────
@@ -141,6 +170,7 @@ fi
 case "$1" in
     --help)    print_help ;;
     --install) cmd_install ;;
+    --install-vscode-extensions) cmd_install_vscode_extensions ;;
     --update)  cmd_update ;;
     --dryrun)  cmd_dryrun ;;
     *)
