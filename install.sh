@@ -97,13 +97,15 @@ cmd_dryrun() {
     echo ""
     echo "Dry run — the following symlinks would be created:"
     echo ""
+    printf "  %-6s | %-50s | %s\n" "TYPE" "TARGET" "SOURCE"
+    printf "  %-6s-+-%-50s-+-%s\n" "------" "--------------------------------------------------" "------------------------------"
     for f in "${FILES[@]}"; do
-        echo "  $HOME/$f  →  $REPO_DIR/$f"
+        printf "  %-6s | %-50s | %s\n" "file" "$HOME/$f" "$REPO_DIR/$f"
     done
     for d in "${DIRS[@]}"; do
-        echo "  $HOME/$d  →  $REPO_DIR/$d"
+        printf "  %-6s | %-50s | %s\n" "dir" "$HOME/$d" "$REPO_DIR/$d"
     done
-    echo "  $VSCODE_SETTINGS_DST  →  $VSCODE_SETTINGS_SRC"
+    printf "  %-6s | %-50s | %s\n" "file" "$VSCODE_SETTINGS_DST" "$VSCODE_SETTINGS_SRC"
     echo ""
 }
 
