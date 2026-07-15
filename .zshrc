@@ -14,6 +14,9 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 # aliases
+alias df="df -h"
+alias rm="rm -i"
+alias mv="mv -i"
 alias gs="git status"
 alias gl="git log"
 alias gll="git log --oneline"
@@ -26,3 +29,5 @@ export DD_SITE="datadoghq.eu"
 [ -f $HOME/Projects/sre-agent ] && export SRE_AGENT_HOME="/Users/florian/Projects/sre-agent"
 
 export PATH="$HOME/.local/bin:$PATH"
+
+echo "finished .zshrc"
