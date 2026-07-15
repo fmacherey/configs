@@ -17,6 +17,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 alias gs="git status"
 alias gl="git log"
 alias gll="git log --oneline"
+alias code="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
 
 export DD_API_KEY="<add-value>"
 export DD_APP_KEY="<add-value>"
