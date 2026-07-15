@@ -1,0 +1,66 @@
+{
+  "chat.agent.enabled": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.accessibilitySupport": "off",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "editor.guides.bracketPairs": true,
+  "editor.renderWhitespace": "all",
+  "editor.suggest.showStatusBar": true,
+  "editor.tabSize": 2,
+  "eslint.alwaysShowStatus": true,
+  "eslint.format.enable": true,
+  "eslint.lintTask.enable": true,
+  "eslint.codeActionsOnSave.rules": null,
+  "files.autoSave": "onFocusChange",
+  "files.exclude": {
+    "**/.git": true,
+    "node_modules": true,
+    "package-lock.json": true,
+    "pnpm-lock.yaml": true,
+    "yarn.lock": true
+  },
+  "git.autofetch": true,
+  "git.fetchOnPull": true,
+  "git.confirmSync": false,
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "javascript.referencesCodeLens.enabled": true,
+  "javascript.referencesCodeLens.showOnAllFunctions": true,
+  "prettier.eslintIntegration": true,
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "typescript.implementationsCodeLens.enabled": true,
+  "typescript.implementationsCodeLens.showOnInterfaceMethods": true,
+  "typescript.referencesCodeLens.enabled": true,
+  "typescript.referencesCodeLens.showOnAllFunctions": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "window.zoomLevel": 0,
+  "workbench.colorTheme": "Dark Modern",
+  "workbench.editor.wrapTabs": true,
+  "workbench.editor.alwaysShowEditorActions": true,
+  "workbench.iconTheme": "catppuccin-mocha",
+  "workbench.settings.useSplitJSON": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.formatOnSave": false
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

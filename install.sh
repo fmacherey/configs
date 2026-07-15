@@ -8,6 +8,10 @@ REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FILES=(.zshrc .vimrc .gitconfig)
 DIRS=(.copilot)
 
+# Additional source -> destination mappings
+VSCODE_SETTINGS_SRC="$REPO_DIR/vscode/settings.json"
+VSCODE_SETTINGS_DST="$HOME/Library/Application Support/Code/User/settings.json"
+
 # ──────────────────────────────────────────────
 # Helpers
 # ──────────────────────────────────────────────
@@ -80,6 +84,7 @@ link_item() {
         esac
     fi
 
+    mkdir -p "$(dirname "$dst")"
     ln -s "$src" "$dst"
     info "Linked: $dst → $src"
 }
@@ -98,6 +103,7 @@ cmd_dryrun() {
     for d in "${DIRS[@]}"; do
         echo "  $HOME/$d  →  $REPO_DIR/$d"
     done
+    echo "  $VSCODE_SETTINGS_DST  →  $VSCODE_SETTINGS_SRC"
     echo ""
 }
 
@@ -110,6 +116,7 @@ cmd_install() {
     for d in "${DIRS[@]}"; do
         link_item "$REPO_DIR/$d" "$HOME/$d"
     done
+    link_item "$VSCODE_SETTINGS_SRC" "$VSCODE_SETTINGS_DST"
     echo ""
     info "Done."
 }
