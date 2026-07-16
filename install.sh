@@ -13,6 +13,7 @@ VSCODE_SETTINGS_SRC="$REPO_DIR/vscode/settings.json"
 VSCODE_SETTINGS_DST="$HOME/Library/Application Support/Code/User/settings.json"
 VSCODE_EXTENSIONS_FILE="$REPO_DIR/vscode/extensions.txt"
 VSCODE_CLI="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
+BACKUP_DIR="$REPO_DIR/configs.backup"
 
 # ──────────────────────────────────────────────
 # Helpers
@@ -37,6 +38,22 @@ EOF
 info()    { echo "[INFO]  $*"; }
 warning() { echo "[WARN]  $*"; }
 error()   { echo "[ERROR] $*" >&2; }
+
+backup_item() {
+    local target="$1"
+    local backup_target="$BACKUP_DIR$target"
+
+    mkdir -p "$(dirname "$backup_target")"
+
+    if [ -e "$backup_target" ] || [ -L "$backup_target" ]; then
+        local timestamp
+        timestamp="$(date +%Y%m%d%H%M%S)"
+        backup_target="${backup_target}.${timestamp}"
+    fi
+
+    mv "$target" "$backup_target"
+    info "Backed up: $target → $backup_target"
+}
 
 # Ask the user what to do when a target path already exists.
 # Sets the global variable CONFLICT_ACTION to one of: skip | repo | keep
@@ -82,8 +99,8 @@ link_item() {
                 return
                 ;;
             repo)
-                info "Removing existing: $dst"
-                rm -rf "$dst"
+                info "Backing up existing: $dst"
+                backup_item "$dst"
                 ;;
         esac
     fi

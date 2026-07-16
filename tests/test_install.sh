@@ -112,6 +112,40 @@ run_test_conflict_skip_keeps_existing_file() {
   rm -rf "$tmp_home"
 }
 
+run_test_conflict_repo_backs_up_existing_file() {
+  local tmp_home tmp_repo tmp_script existing_content backup_path
+  tmp_home="$(mktemp -d)"
+  tmp_repo="$(mktemp -d)"
+  tmp_script="$tmp_repo/install.sh"
+  existing_content="backup-me"
+
+  cp "$INSTALL_SCRIPT" "$tmp_script"
+  cp "$REPO_DIR/.zshrc" "$tmp_repo/.zshrc"
+  cp "$REPO_DIR/.vimrc" "$tmp_repo/.vimrc"
+  cp "$REPO_DIR/.gitconfig" "$tmp_repo/.gitconfig"
+  cp -R "$REPO_DIR/.copilot" "$tmp_repo/.copilot"
+  mkdir -p "$tmp_repo/vscode"
+  cp "$REPO_DIR/vscode/settings.json" "$tmp_repo/vscode/settings.json"
+  cp "$REPO_DIR/vscode/extensions.txt" "$tmp_repo/vscode/extensions.txt"
+
+  printf '%s\n' "$existing_content" > "$tmp_home/.zshrc"
+
+  printf 'r\n' | HOME="$tmp_home" bash "$tmp_script" --install >/dev/null
+
+  assert_is_symlink_to "$tmp_home/.zshrc" "$tmp_repo/.zshrc" "conflict repo replaces with symlink"
+
+  backup_path="$tmp_repo/configs.backup$tmp_home/.zshrc"
+  if [[ -f "$backup_path" ]] && [[ "$(cat "$backup_path")" == "$existing_content" ]]; then
+    pass "conflict repo backs up original file"
+  else
+    echo "  expected backup file with original content at: $backup_path"
+    fail "conflict repo backs up original file"
+  fi
+
+  rm -rf "$tmp_repo"
+  rm -rf "$tmp_home"
+}
+
 run_test_update_uses_git_pull() {
   local tmp_bin log_file out
   tmp_bin="$(mktemp -d)"
@@ -172,6 +206,7 @@ main() {
   run_test_dryrun_table
   run_test_install_creates_symlinks
   run_test_conflict_skip_keeps_existing_file
+  run_test_conflict_repo_backs_up_existing_file
   run_test_update_uses_git_pull
   run_test_extensions_fails_when_cli_missing
 
