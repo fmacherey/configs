@@ -54,6 +54,19 @@ assert_is_symlink_to() {
   fi
 }
 
+copy_item_if_present() {
+  local src="$1"
+  local dst="$2"
+
+  if [[ -L "$src" || -e "$src" ]]; then
+    if [[ -d "$src" ]]; then
+      cp -R "$src" "$dst"
+    else
+      cp "$src" "$dst"
+    fi
+  fi
+}
+
 run_test_help_output() {
   local out
   out="$(bash "$INSTALL_SCRIPT" --help)"
@@ -83,7 +96,16 @@ run_test_install_creates_symlinks() {
   HOME="$tmp_home" bash "$INSTALL_SCRIPT" --install >/dev/null
 
   assert_is_symlink_to "$tmp_home/.zshrc" "$REPO_DIR/.zshrc" "install links .zshrc"
-  assert_is_symlink_to "$tmp_home/.vimrc" "$REPO_DIR/.vimrc" "install links .vimrc"
+  if [[ -L "$REPO_DIR/.vimrc" || -e "$REPO_DIR/.vimrc" ]]; then
+    assert_is_symlink_to "$tmp_home/.vimrc" "$REPO_DIR/.vimrc" "install links .vimrc"
+  else
+    if [[ ! -e "$tmp_home/.vimrc" && ! -L "$tmp_home/.vimrc" ]]; then
+      pass "install skips missing .vimrc source"
+    else
+      echo "  expected .vimrc to be skipped when source is missing"
+      fail "install skips missing .vimrc source"
+    fi
+  fi
   assert_is_symlink_to "$tmp_home/.gitconfig" "$REPO_DIR/.gitconfig" "install links .gitconfig"
   assert_is_symlink_to "$tmp_home/.copilot" "$REPO_DIR/.copilot" "install links .copilot"
   assert_is_symlink_to "$tmp_home/Library/Application Support/Code/User/settings.json" "$REPO_DIR/vscode/settings.json" "install links vscode settings"
@@ -120,10 +142,10 @@ run_test_conflict_repo_backs_up_existing_file() {
   existing_content="backup-me"
 
   cp "$INSTALL_SCRIPT" "$tmp_script"
-  cp "$REPO_DIR/.zshrc" "$tmp_repo/.zshrc"
-  cp "$REPO_DIR/.vimrc" "$tmp_repo/.vimrc"
-  cp "$REPO_DIR/.gitconfig" "$tmp_repo/.gitconfig"
-  cp -R "$REPO_DIR/.copilot" "$tmp_repo/.copilot"
+  copy_item_if_present "$REPO_DIR/.zshrc" "$tmp_repo/.zshrc"
+  copy_item_if_present "$REPO_DIR/.vimrc" "$tmp_repo/.vimrc"
+  copy_item_if_present "$REPO_DIR/.gitconfig" "$tmp_repo/.gitconfig"
+  copy_item_if_present "$REPO_DIR/.copilot" "$tmp_repo/.copilot"
   mkdir -p "$tmp_repo/vscode"
   cp "$REPO_DIR/vscode/settings.json" "$tmp_repo/vscode/settings.json"
   cp "$REPO_DIR/vscode/extensions.txt" "$tmp_repo/vscode/extensions.txt"
