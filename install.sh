@@ -13,6 +13,7 @@ VSCODE_SETTINGS_SRC="$REPO_DIR/vscode/settings.json"
 VSCODE_SETTINGS_DST="$HOME/Library/Application Support/Code/User/settings.json"
 VSCODE_EXTENSIONS_FILE="$REPO_DIR/vscode/extensions.txt"
 VSCODE_CLI="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
+BREW_PACKAGES_FILE="$REPO_DIR/brew/packages.txt"
 BACKUP_DIR="$REPO_DIR/configs.backup"
 
 # ──────────────────────────────────────────────
@@ -28,6 +29,8 @@ Options:
   --install   Create symlinks for all whitelisted files and directories
     --install-vscode-extensions
                             Install VS Code extensions listed in vscode/extensions.txt
+    --install-packages
+                            Install Homebrew formulae and casks from brew/packages.txt
   --update    Pull the latest changes from the repository (git pull)
   --dryrun    Show what would be installed without creating any symlinks
 
@@ -175,6 +178,53 @@ cmd_install_vscode_extensions() {
     info "Done installing VS Code extensions."
 }
 
+cmd_install_packages() {
+    local package
+    local cask
+
+    info "Installing Homebrew packages from $BREW_PACKAGES_FILE ..."
+
+    if [ ! -f "$BREW_PACKAGES_FILE" ]; then
+        error "Packages file not found: $BREW_PACKAGES_FILE"
+        exit 1
+    fi
+
+    if ! command -v brew >/dev/null 2>&1; then
+        error "Homebrew 'brew' command not found in PATH."
+        exit 1
+    fi
+
+    BREW_PACKAGES=()
+    BREW_CASKS=()
+    # shellcheck source=/dev/null
+    source "$BREW_PACKAGES_FILE"
+
+    info "Updating Homebrew..."
+    brew update
+    info "Upgrading installed Homebrew packages..."
+    brew upgrade
+
+    for package in "${BREW_PACKAGES[@]}"; do
+        if brew list --formula "$package" >/dev/null 2>&1; then
+            info "Already installed formula: $package"
+            continue
+        fi
+        info "Installing formula: $package"
+        brew install "$package"
+    done
+
+    for cask in "${BREW_CASKS[@]}"; do
+        if brew list --cask "$cask" >/dev/null 2>&1; then
+            info "Already installed cask: $cask"
+            continue
+        fi
+        info "Installing cask: $cask"
+        brew install --cask "$cask"
+    done
+
+    info "Done installing Homebrew packages."
+}
+
 # ──────────────────────────────────────────────
 # Entry point
 # ──────────────────────────────────────────────
@@ -188,6 +238,7 @@ case "$1" in
     --help)    print_help ;;
     --install) cmd_install ;;
     --install-vscode-extensions) cmd_install_vscode_extensions ;;
+    --install-packages|--install--packages) cmd_install_packages ;;
     --update)  cmd_update ;;
     --dryrun)  cmd_dryrun ;;
     *)

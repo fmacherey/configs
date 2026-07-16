@@ -1,8 +1,16 @@
-firefox
-signal
-microsoft-teams
-# chrome
-visual-studio-code
-copilot-cli
-gh
-# claude-code
+BREW_PACKAGES=(
+	gh
+	node
+	yarn
+)
+
+BREW_CASKS=(
+	copilot-cli
+	firefox
+	signal
+	microsoft-teams
+	visual-studio-code
+  warp
+	# google-chrome
+	# claude-code
+)

@@ -72,6 +72,7 @@ run_test_help_output() {
   out="$(bash "$INSTALL_SCRIPT" --help)"
 
   assert_contains "$out" "--install-vscode-extensions" "help includes extensions option"
+  assert_contains "$out" "--install-packages" "help includes packages option"
   assert_contains "$out" "--dryrun" "help includes dryrun option"
 }
 
@@ -221,6 +222,46 @@ run_test_extensions_fails_when_cli_missing() {
   rm -rf "$tmp_home"
 }
 
+run_test_install_packages_runs_brew_update_upgrade_and_installs() {
+  local tmp_repo tmp_script tmp_bin log_file out
+  tmp_repo="$(mktemp -d)"
+  tmp_script="$tmp_repo/install.sh"
+  tmp_bin="$(mktemp -d)"
+  log_file="$(mktemp)"
+
+  mkdir -p "$tmp_repo/brew"
+  cp "$INSTALL_SCRIPT" "$tmp_script"
+  cp "$REPO_DIR/brew/packages.txt" "$tmp_repo/brew/packages.txt"
+
+  cat > "$tmp_bin/brew" <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+printf '%s\n' "$*" >> "$MOCK_BREW_LOG"
+
+if [[ "$1" == "list" ]]; then
+  exit 1
+fi
+
+exit 0
+EOF
+  chmod +x "$tmp_bin/brew"
+
+  out="$(PATH="$tmp_bin:$PATH" MOCK_BREW_LOG="$log_file" bash "$tmp_script" --install-packages)"
+
+  assert_contains "$out" "Updating Homebrew" "packages command runs brew update"
+  assert_contains "$out" "Upgrading installed Homebrew packages" "packages command runs brew upgrade"
+  assert_contains "$(cat "$log_file")" "update" "brew update command executed"
+  assert_contains "$(cat "$log_file")" "upgrade" "brew upgrade command executed"
+  assert_contains "$(cat "$log_file")" "install gh" "formula install executed"
+  assert_contains "$(cat "$log_file")" "install node" "formula install node executed"
+  assert_contains "$(cat "$log_file")" "install --cask firefox" "cask install executed"
+  assert_contains "$(cat "$log_file")" "install --cask visual-studio-code" "visual studio code cask install executed"
+
+  rm -rf "$tmp_repo"
+  rm -rf "$tmp_bin"
+  rm -f "$log_file"
+}
+
 main() {
   echo "Running install.sh tests..."
 
@@ -231,6 +272,7 @@ main() {
   run_test_conflict_repo_backs_up_existing_file
   run_test_update_uses_git_pull
   run_test_extensions_fails_when_cli_missing
+  run_test_install_packages_runs_brew_update_upgrade_and_installs
 
   echo ""
   echo "Passed: $PASS_COUNT"

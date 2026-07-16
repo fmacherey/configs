@@ -12,6 +12,7 @@ Personal configuration files (dotfiles) for a new machine setup.
 | `.copilot/`             | GitHub Copilot configuration                                   |
 | `vscode/settings.json`  | VS Code user settings (symlinked into Code User settings path) |
 | `vscode/extensions.txt` | VS Code extensions list used by installer                      |
+| `brew/packages.txt`     | Homebrew formulae and casks installed by installer             |
 
 ## Install
 
@@ -49,6 +50,8 @@ Options:
   --install   Create symlinks for all whitelisted files and directories
   --install-vscode-extensions
               Install VS Code extensions listed in vscode/extensions.txt
+  --install-packages
+              Install Homebrew formulae and casks from brew/packages.txt
   --update    Pull the latest changes from the repository (git pull)
   --dryrun    Show what would be installed without creating any symlinks
 ```
@@ -96,6 +99,37 @@ The installer uses the VS Code CLI at:
 
 ```sh
 /Applications/Visual Studio Code.app/Contents/Resources/app/bin/code
+```
+
+### `--install-packages`
+
+Install Homebrew formulae and casks from `brew/packages.txt`:
+
+```sh
+./install.sh --install-packages
+```
+
+The installer runs these commands first:
+
+```sh
+brew update
+brew upgrade
+```
+
+Then it installs missing formulae and casks.
+
+The `brew/packages.txt` file is sourced as shell arrays:
+
+```sh
+BREW_PACKAGES=(
+  gh
+  node
+)
+
+BREW_CASKS=(
+  firefox
+  visual-studio-code
+)
 ```
 
 ## Adding new files
