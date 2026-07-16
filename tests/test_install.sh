@@ -58,7 +58,7 @@ copy_item_if_present() {
   local src="$1"
   local dst="$2"
 
-  if [[ -L "$src" || -e "$src" ]]; then
+  if [[ -e "$src" || -d "$src" ]]; then
     if [[ -d "$src" ]]; then
       cp -R "$src" "$dst"
     else
@@ -96,7 +96,7 @@ run_test_install_creates_symlinks() {
   HOME="$tmp_home" bash "$INSTALL_SCRIPT" --install >/dev/null
 
   assert_is_symlink_to "$tmp_home/.zshrc" "$REPO_DIR/.zshrc" "install links .zshrc"
-  if [[ -L "$REPO_DIR/.vimrc" || -e "$REPO_DIR/.vimrc" ]]; then
+  if [[ -e "$REPO_DIR/.vimrc" || -d "$REPO_DIR/.vimrc" ]]; then
     assert_is_symlink_to "$tmp_home/.vimrc" "$REPO_DIR/.vimrc" "install links .vimrc"
   else
     if [[ ! -e "$tmp_home/.vimrc" && ! -L "$tmp_home/.vimrc" ]]; then
