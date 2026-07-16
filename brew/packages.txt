@@ -4,3 +4,5 @@ microsoft-teams
 # chrome
 visual-studio-code
 copilot-cli
+gh
+# claude-code
