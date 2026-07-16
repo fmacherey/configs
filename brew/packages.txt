@@ -1,0 +1,6 @@
+firefox
+signal
+microsoft-teams
+# chrome
+visual-studio-code
+copilot-cli
