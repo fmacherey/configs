@@ -1,6 +1,8 @@
 BREW_PACKAGES=(
+    bun
 	gh
 	node
+    pnpm
 	yarn
 )
 
