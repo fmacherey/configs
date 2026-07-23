@@ -1,19 +1,30 @@
 {
   "chat.agent.enabled": true,
+  "chat.mcp.gallery.enabled": true,
+  "cSpell.language": "de",
+  "cSpell.languageSettings": [],
+  "cSpell.userWords": ["lite"],
   "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.hideUnchangedRegions.enabled": true,
   "editor.accessibilitySupport": "off",
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
   },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnType": false,
+  "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
   "editor.guides.bracketPairs": true,
   "editor.renderWhitespace": "all",
   "editor.suggest.showStatusBar": true,
   "editor.tabSize": 2,
+  "editor.wordWrap": "bounded",
   "eslint.alwaysShowStatus": true,
   "eslint.format.enable": true,
   "eslint.lintTask.enable": true,
   "eslint.codeActionsOnSave.rules": null,
+  "extensions.autoUpdate": "on",
   "files.autoSave": "onFocusChange",
   "files.exclude": {
     "**/.git": true,
@@ -22,27 +33,44 @@
     "pnpm-lock.yaml": true,
     "yarn.lock": true
   },
+  "files.insertFinalNewline": true,
   "git.autofetch": true,
   "git.fetchOnPull": true,
   "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "git.blame.editorDecoration.enabled": true,
   "github.copilot.nextEditSuggestions.enabled": true,
+  "githubPullRequests.pullBranch": "never",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "javascript.referencesCodeLens.enabled": true,
   "javascript.referencesCodeLens.showOnAllFunctions": true,
+  "javascript.preferences.importModuleSpecifier": "relative",
   "prettier.eslintIntegration": true,
   "terminal.integrated.defaultProfile.osx": "zsh",
+  // "sonarlint.connectedMode.connections.sonarcloud": [
+  //   {
+  //     "organizationKey": "avocadostore",
+  //     "connectionId": "avocadostore",
+  //     "region": "EU"
+  //   }
+  // ],
   "typescript.implementationsCodeLens.enabled": true,
   "typescript.implementationsCodeLens.showOnInterfaceMethods": true,
   "typescript.referencesCodeLens.enabled": true,
   "typescript.referencesCodeLens.showOnAllFunctions": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "vs-code-prettier-eslint.prettierLast": true,
   "window.zoomLevel": 0,
-  "workbench.colorTheme": "Dark Modern",
+  "workbench.colorTheme": "Catppuccin Mocha",
   "workbench.editor.wrapTabs": true,
   "workbench.editor.alwaysShowEditorActions": true,
   "workbench.iconTheme": "catppuccin-mocha",
   "workbench.settings.useSplitJSON": true,
   "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json]": {

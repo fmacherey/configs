@@ -1,9 +1,15 @@
 BREW_PACKAGES=(
     bun
+	corepack
+	fzf
+	# garden-cli
 	gh
+	# helm
+	kubernetes-cli
 	node
     pnpm
 	yarn
+	vim
 )
 
 BREW_CASKS=(
@@ -15,4 +21,5 @@ BREW_CASKS=(
   warp
 	# google-chrome
 	# claude-code
+	# gcloud-cli
 )
