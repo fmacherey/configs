@@ -11,6 +11,7 @@
 - Be sure about your working directory if you execute git or gh commands.
 - NEVER use force or admin to just push — ask for explicit confirmation.
 - **`gh pr merge` — check CI fail-count explicitly, never from pipe chains.** `gh pr checks <n> --watch | tail` in `&&`-chains masks the exit status — a merge can slip through despite red checks. Before EVERY `gh pr merge`: count fails explicitly (`gh pr checks <n> | grep -c fail`) and only merge at 0.
+- When creating a new git worktree, be sure to fetch main branch and create worktree from origin/main, not current HEAD. 
 
 ### Always Ask Before Committing, Pushing, or Opening a PR
 **Never** create a commit, push to remote, or open a pull request without asking the user first.
