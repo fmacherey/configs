@@ -11,7 +11,9 @@
 - Be sure about your working directory if you execute git or gh commands.
 - NEVER use force or admin to just push — ask for explicit confirmation.
 - **`gh pr merge` — check CI fail-count explicitly, never from pipe chains.** `gh pr checks <n> --watch | tail` in `&&`-chains masks the exit status — a merge can slip through despite red checks. Before EVERY `gh pr merge`: count fails explicitly (`gh pr checks <n> | grep -c fail`) and only merge at 0.
-- When creating a new git worktree, be sure to fetch main branch and create worktree from origin/main, not current HEAD. 
+- When creating a new git worktree, be sure to fetch main branch and create worktree from origin/main, not current HEAD.
+- Newer use git push --force as default. If you need to force push, always ask for explicit confirmation first.
+- As commit messages, always use "<key>(<type>): <description>" format. When <type> is not given, use "<key>: <description>". key might be something like "feat", "fix", "docs", "refactor", "test", "chore" or any other type that is appropriate for the change. The description should be a short summary of the change, ideally less than 50 characters. If you need to provide more context, use the body of the commit message to explain the change in more detail. <type> can include the jira issue number, so like "feat(JIRA-1234/Button): adjust css" is a valid commit message.
 
 ### Always Ask Before Committing, Pushing, or Opening a PR
 **Never** create a commit, push to remote, or open a pull request without asking the user first.
